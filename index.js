@@ -4,6 +4,8 @@ const sqlite3 = require("sqlite3").verbose();
 const PORT = process.env.PORT || 8081;
 
 const app = express();
+
+// DB Connection
 const db = new sqlite3.Database(":memory", (err) => {
   if (err) {
     return console.log(err.message);
@@ -11,7 +13,8 @@ const db = new sqlite3.Database(":memory", (err) => {
   console.log(`connected to database`);
 });
 
-const getcontryData = (countryName) => {
+//Fetched country by countryName
+const getcontryData = (countryName) => { 
   return new Promise((resolve, reject) => {
     db.all(
       `SELECT MAX(year), MIN(year), country_id
@@ -32,6 +35,7 @@ const getcontryData = (countryName) => {
   });
 };
 
+// fetch country list
 const getCountries = () => {
   return new Promise((resolve, reject) => {
     let resp = [];
@@ -53,6 +57,7 @@ const getCountries = () => {
   });
 };
 
+// API ENDPOINT country list
 app.get("/contries", async (req, res) => {
   try {
     const contriesData = await getCountries();
@@ -62,6 +67,7 @@ app.get("/contries", async (req, res) => {
   }
 });
 
+// GET COUNTRY BY ID
 const getCountry = (id, startYear, endYear) => {
   return new Promise((resolve, reject) => {
     db.all(
@@ -87,6 +93,7 @@ const getCountry = (id, startYear, endYear) => {
   });
 };
 
+// API ENDPOINT fetch country by id
 app.get("/contry/:id", async (req, res) => {
   try {
     const { startYear, endYear } = req.query;

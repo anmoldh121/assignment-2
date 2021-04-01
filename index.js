@@ -1,7 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 
 const app = express();
 const db = new sqlite3.Database(":memory", (err) => {

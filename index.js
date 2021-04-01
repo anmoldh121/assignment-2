@@ -21,7 +21,6 @@ const getcontryData = (countryName) => {
           reject(err);
         }
         let countryData = {};
-        console.log(row);
         row.forEach((el) => {
           countryData.maxYear = el["MAX(year)"];
           countryData.minYear = el["MIN(year)"];
@@ -57,7 +56,6 @@ const getCountries = () => {
 app.get("/contries", async (req, res) => {
   try {
     const contriesData = await getCountries();
-    console.log(contriesData);
     res.status(201).json(contriesData);
   } catch (err) {}
 });
@@ -73,7 +71,6 @@ const getCountry = (id, startYear, endYear) => {
         }
         let resp = {};
         let data = [];
-        console.log(rows);
         rows.forEach((row) => {
           resp.countryId = row.country_id;
           resp.year = row.year;

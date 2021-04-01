@@ -1,6 +1,5 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
-const routes = require("./routes/router");
 
 const PORT = 8081;
 
@@ -11,8 +10,6 @@ const db = new sqlite3.Database(":memory", (err) => {
   }
   console.log(`connected to database`);
 });
-
-app.use("/api", routes);
 
 const getcontryData = (countryName) => {
   return new Promise((resolve, reject) => {

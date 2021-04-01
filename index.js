@@ -57,7 +57,9 @@ app.get("/contries", async (req, res) => {
   try {
     const contriesData = await getCountries();
     res.status(201).json(contriesData);
-  } catch (err) {}
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 const getCountry = (id, startYear, endYear) => {
@@ -77,7 +79,7 @@ const getCountry = (id, startYear, endYear) => {
           resp.category = row.category;
           resp.value = row.value;
 
-          data.push({...resp})
+          data.push({ ...resp });
         });
         resolve(data);
       }
@@ -91,10 +93,14 @@ app.get("/contry/:id", async (req, res) => {
     const id = req.params.id;
     const resp = await getCountry(id, startYear, endYear);
     res.status(201).json(resp);
-  } catch (err) {}
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-
+app.get("/", (req, res) => {
+  res.send("WORKING");
+});
 
 app.listen(PORT, () => {
   console.log("Listening on PORT ", PORT);
